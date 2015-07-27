@@ -1,0 +1,19 @@
+{% extends '../layouts/app.html' %}
+
+{% block title %}Koa base app{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<h2 class="text-center">Welcome to Koa base app</h2>
+		<h4 class="text-center text-muted">Share what you are planing to do with hapi-base</h4>
+		<div id="timeline" class="row"></div>
+	</div>
+{% endblock %}
+
+{% block js %}
+	<script type="text/javascript">
+		var el = document.getElementById('app-page');
+		el.className = 'active';
+	</script>
+	<script type="text/javascript" src="/js/main.js"></script>
+{% endblock %}

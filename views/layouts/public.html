@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{% block title %}{% endblock %}</title>
+	<link rel="stylesheet" type="text/css" href="/css/font-awesome.css">
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="/css/public.css">
+</head>
+<body>
+	<div class="main-container">
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Hapi base</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li id="home-page">
+						<a href="/">Home</a>
+					</li>
+					<li id="about-page">
+						<a href="/about">About</a>
+					</li>
+					{% if user %}
+					<li id="app-page">
+						<a href="/app">App</a>
+					</li>					
+					{% endif %}
+				</ul>
+
+				{% if !hideLogin %}
+					{% if user %}
+					<div class="navbar-right">
+						   <a class="navbar-brand">Hello {{ user.name }}</a>
+					</div>
+					{% else %}
+					<form class="navbar-form navbar-right" method="post" action="/login">
+						<div class="form-group">
+							<input type="text" placeholder="Email" class="form-control" name="username">
+						</div>
+						<div class="form-group">
+							<input type="password" placeholder="Password" class="form-control" name="password">
+						</div>
+						<button type="submit" class="btn btn-success">Sign in</button>
+					</form>
+					{% endif %}
+				{% endif %}
+			</div>
+
+		</nav>
+
+		<div style="margin-top:50px">
+		{% block content %}{% endblock %}
+		</div>
+	</div>
+
+	{% block js %}{% endblock %}
+</body>
+</html>

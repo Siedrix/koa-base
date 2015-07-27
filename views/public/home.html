@@ -1,0 +1,19 @@
+{% extends '../layouts/public.html' %}
+
+{% block title %}Koa base home{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<h2 class="text-center">Welcome to Koa base</h2>
+		{% if !user %}
+			<p class="text-center">If you dont have a user, <a href="/signup">signup here</a></p>
+		{% endif %}
+	</div>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+	var el = document.getElementById('home-page');
+	el.className = 'active';
+</script>
+{% endblock %}

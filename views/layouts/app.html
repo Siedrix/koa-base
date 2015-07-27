@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{% block title %}{% endblock %}</title>
+	<link rel="stylesheet" type="text/css" href="/css/font-awesome.css">
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="/css/app.css">
+	{% block css %}{% endblock %}
+</head>
+<body>
+	<div class="main-container">
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Hapi base</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li id="home-page">
+						<a href="/">Home</a>
+					</li>
+					<li id="about-page">
+						<a href="/about">About</a>
+					</li>
+					<li id="app-page">
+						<a href="/app">App</a>
+					</li>					
+				</ul>
+
+				<div class="navbar-right">
+					   <a class="navbar-brand">Hello {{ user.name }}</a>
+				</div>
+			</div>
+
+		</nav>
+
+		<div style="margin-top:50px">
+		{% block content %}{% endblock %}
+		</div>
+	</div>
+
+
+	<script>window.userId = "{{user._id.toString()}}"</script>
+	<script src="/socket.io/socket.io.js"></script>
+	{% block js %}{% endblock %}
+	<script src="//localhost:35729/livereload.js"></script>
+</body>
+</html>

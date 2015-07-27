@@ -1,0 +1,22 @@
+.timeline{
+	width: 588px;
+	margin: 0 auto;
+}
+
+.timeline .input-box{
+	padding: 10px 12px;
+	background-color: rgb(231, 232, 231);
+}
+.timeline .input-box textarea{
+	width: 100%;
+}
+
+.timeline .timeline-item{
+	background-color: rgb(231, 232, 231);
+	padding: 10px 12px;
+	border-bottom: 1px solid rgb(199, 202, 199);
+}
+.timeline .timeline-item .name{
+	font-weight: bold;
+	color: #292f33;
+}
