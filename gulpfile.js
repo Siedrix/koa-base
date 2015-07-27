@@ -2,7 +2,6 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var rename = require("gulp-rename");
 
-// var webpack  = require('webpack-stream');
 var webpack  = require('webpack');
 
 var livereload = require('gulp-livereload');
@@ -13,35 +12,12 @@ gulp.task('reload', function (callback) {
 	return gulp.src('frontend/main.jsx').pipe( livereload() );
 });
 
-/*
-gulp.task('webpack', function (callback) {
-	return gulp.src('frontend/main.jsx')
-		.pipe( webpack({
-			output: {
-				sourceMapFilename:'[file].map'
-			},
-			module: {
-				loaders: [
-					{
-						test: /\.jsx?$/,
-						exclude: /(node_modules|bower_components)/,
-						loader: 'babel'
-					}
-				],
-			}
-		}))
-		.pipe(rename('main.js'))
-		.pipe( gulp.dest('public/js/') )
-		.pipe( livereload() );
-});
-*/
-
 gulp.task("webpack", function(callback) {
 	// run webpack
 	webpack({
 		entry: './frontend/main.jsx',
 		output: {
-			filename: 'public/js/main.js',
+			filename: 'public/js/build/main.js',
 			sourceMapFilename:'[file].map'
 		},
 		devtool: "source-map",
