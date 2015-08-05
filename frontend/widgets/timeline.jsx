@@ -1,7 +1,7 @@
-var React = require('react');
-var backboneMixin = require('backbone-react-component');
-
+import React from 'react'
+import backboneMixin from 'backbone-react-component'
 import moment from 'moment'
+
 import { Model as IdeaModel } from '../data/idea';
 
 var TimelineItem = React.createClass({
@@ -9,7 +9,6 @@ var TimelineItem = React.createClass({
 	removeHandler: function(){
 		var model = this.getModel();
 
-		debugger;
 		model.destroy();
 	},
 	render: function(){
@@ -56,10 +55,11 @@ var Timeline = React.createClass({
 		}
 	},
 	addIdea:function () {
-		var value = this.refs.idea.getDOMNode().value;
-		console.log('Adding', value);
+		var el = this.refs.idea.getDOMNode();
+		var value = el.value;
 
-		var idea = new IdeaModel({text:value});
+		var idea = new IdeaModel({content:value});
+		el.value = '';
 		idea.save();
 	},
 	render: function () {
@@ -98,4 +98,4 @@ var Timeline = React.createClass({
 	}
 });
 
-module.exports = Timeline;
+export default Timeline;

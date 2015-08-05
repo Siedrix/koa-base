@@ -18,11 +18,18 @@ gulp.task('reload', function (callback) {
 
 var node_modules_dir = path.join(__dirname, 'node_modules');
 var webpackConfig = {
-	entry: './frontend/main.jsx',
+	entry: {
+		vendor: ['react','Backbone','backbone-react-component','jquery', 'underscore','moment'],
+		main :'./frontend/main.jsx',
+		profile:'./frontend/profile.jsx'
+	},
 	output: {
-		filename: 'public/js/build/main.js',
+		filename: 'public/js/build/[name].js',
 		sourceMapFilename:'[file].map'
 	},
+	plugins : [
+		new webpack.optimize.CommonsChunkPlugin(/* chunkName= */'vendor', /* filename= */'public/js/build/vendor.js')
+	],
 	module: {
 		loaders: [
 			{
@@ -34,22 +41,6 @@ var webpackConfig = {
 	}
 }
 
-webpackConfig.resolve = {alias: {}};
-webpackConfig.module.noParse = [];
-
-var deps = [
-	'jquery/dist/jquery.min.js',
-	'react/dist/react.min.js',
-	'moment/min/moment.min.js',
-	'underscore/underscore-min.js',
-];
-
-deps.forEach(function (dep) {
-	var depPath = path.resolve(node_modules_dir, dep);
-	webpackConfig.resolve.alias[dep.split(path.sep)[0]] = depPath;
-	webpackConfig.module.noParse.push(depPath);
-});
-
 gulp.task("webpack", function(callback) {
 	// run webpack
 	var configClone = _.extend({}, webpackConfig);
@@ -60,8 +51,6 @@ gulp.task("webpack", function(callback) {
 		var statsAsString = stats.toString({});
 
 		gutil.log("[webpack]", statsAsString.split('chunk')[0]);
-		// livereload({ start: true })
-		// console.log('Should reload', livereload());
 		livereload.changed('public/js/main.js');
 		callback();
 	});
@@ -72,7 +61,6 @@ gulp.task("build", function(callback) {
 	// run webpack
 	var configClone = _.extend({}, webpackConfig);
 
-	configClone.plugins = [];
 	configClone.plugins.push( new webpack.optimize.UglifyJsPlugin({minimize: true}) );
 	configClone.plugins.push( new CompressionPlugin({
 		asset: "{file}.gz",
@@ -81,6 +69,22 @@ gulp.task("build", function(callback) {
 		threshold: 500,
 		minRatio: 0.8
 	}) );
+
+	configClone.resolve = {alias: {}};
+	configClone.module.noParse = [];
+
+	var deps = [
+		'jquery/dist/jquery.min.js',
+		'react/dist/react.min.js',
+		'moment/min/moment.min.js',
+		'underscore/underscore-min.js',
+	];
+
+	deps.forEach(function (dep) {
+		var depPath = path.resolve(node_modules_dir, dep);
+		configClone.resolve.alias[dep.split(path.sep)[0]] = depPath;
+		configClone.module.noParse.push(depPath);
+	});	
 
 	webpack(configClone, function(err, stats) {
 		if(err) throw new gutil.PluginError("webpack", err);

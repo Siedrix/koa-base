@@ -29,7 +29,7 @@
 				</ul>
 
 				<div class="navbar-right">
-					   <a class="navbar-brand">Hello {{ user.name }}</a>
+					   <a class="navbar-brand" href="/profile">Hello {{ user.name }}</a>
 				</div>
 			</div>
 
@@ -43,7 +43,10 @@
 
 	<script>window.userId = "{{user._id.toString()}}"</script>
 	<script src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript" src="/js/build/vendor.js"></script>
 	{% block js %}{% endblock %}
+	{% if env !== 'production' %}
 	<script src="//localhost:35729/livereload.js"></script>
+	{% endif %}
 </body>
 </html>

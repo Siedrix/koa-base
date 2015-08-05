@@ -12,6 +12,15 @@ ideasRouter.get('/', function* (){
 	this.body = ideas.map(function(item){return item.toJSON()});
 });
 
+ideasRouter.post('/', function* (){
+	let idea = yield Idea.create({
+		content: this.request.body.content,
+		user: this.state.user._id
+	});
+
+	this.body = idea.toJSON();
+});
+
 ideasRouter.get('/:id', function* (){
 	let idea = yield Idea.findOne({_id:this.params.id}).exec();
 
@@ -46,15 +55,6 @@ ideasRouter.del('/:id', function* (){
 	yield idea.remove();
 
 	this.body = {sucess:true};
-});
-
-ideasRouter.post('/', function* (){
-	let idea = yield Idea.create({
-		content: this.request.body.text,
-		user: this.state.user._id
-	});
-
-	this.body = idea.toJSON();
 });
 
 export default ideasRouter;

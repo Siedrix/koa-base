@@ -9,11 +9,11 @@ var koa = require('koa');
 var session = require('koa-session-redis');
 var render = require('koa-swig');
 var path = require('path');
-var serve = require('koa-static');
 var bodyParser = require('koa-bodyparser');
 var flash = require ('koa-flash');
 var router = require('koa-router')();
 var db = require('./lib/db');
+var logger = require('./lib/logger');
 
 var app = koa();
 
@@ -28,16 +28,19 @@ app.use(session({
 
 app.context.render = render({
 	root: path.join(__dirname, 'views'),
+	locals: {env:process.env.NODE_ENV},
 	cache: false, // disable, set to false
 	ext: 'html'
 });
 
-app.use(serve(__dirname + '/public'));
+var serve = require('koa-static');
+app.use( serve(__dirname + '/public') );
+
 app.use(function *(next){
 	var start = new Date();
 	yield next;
 	var ms = new Date() - start;
-	console.log(this.response.status, this.request.method, 'Request to', this.request.url, 'took', ms +'ms', this.response.length + 'b');
+	logger.info(this.response.status, this.request.method, 'Request to', this.request.url, 'took', ms +'ms', this.response.length + 'b');
 	this.set('X-Response-Time', ms + 'ms');
 });
 
@@ -65,7 +68,7 @@ app
 var server = require('http').createServer(app.callback());
 
 var io = require('socket.io')(server);
-io.on('connection', function(){ console.log('new socket connection') });
+io.on('connection', function(){});
 db.io = io;
 
-server.listen(3000, ()=> console.log('Server running') );
+server.listen(3000, ()=> logger.info('Server running') );

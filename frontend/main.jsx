@@ -1,8 +1,9 @@
-require('babel/register');
-var React = require('react');
-var Timeline = require( './widgets/timeline.jsx' );
-var IdeaCollection = require('./data/idea').Collection;
+import React from 'react'
+import Timeline from './widgets/timeline.jsx'
+import { Collection as IdeaCollection } from './data/idea'
+
 window.datalayer = {};
+window.$ = require('jquery');
 
 var ideas = window.datalayer.ideas = new IdeaCollection();
 
@@ -14,7 +15,7 @@ socket.on('ideas', function(data){
 
 var xhr = ideas.fetch();
 
-xhr.done(function(data){console.log('Ideas loaded')});
+xhr.done(function(data){/*'Ideas loaded'*/});
 
 React.render(<Timeline collection={ideas} />, document.getElementById('timeline') );
 

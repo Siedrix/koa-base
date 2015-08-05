@@ -32,7 +32,7 @@
 				{% if !hideLogin %}
 					{% if user %}
 					<div class="navbar-right">
-						   <a class="navbar-brand">Hello {{ user.name }}</a>
+						   <a class="navbar-brand" href="/profile">Hello {{ user.name }}</a>
 					</div>
 					{% else %}
 					<form class="navbar-form navbar-right" method="post" action="/login">
