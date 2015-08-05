@@ -1,22 +1,23 @@
 import React from 'react'
-import backboneMixin from 'backbone-react-component'
+import Backbone from 'Backbone'
+import {} from 'backbone-react-component'
 import _ from 'underscore'
 
 var Profile = React.createClass({
 	mixins: [Backbone.React.Component.mixin],
-	refreshTokens: function(){
-		let user = this.getModel();
-		let xhr = user.refreshTokens();
+	refreshTokens: function () {
+		let user = this.getModel()
+		let xhr = user.refreshTokens()
 
-		xhr.done(function(){});
-		xhr.fail(function(){});
+		xhr.done(function () {})
+		xhr.fail(function () {})
 	},
 	render: function () {
-		if( _.isEmpty(this.state.model) ){
-			return (<div className="profile"><div className="loading">Loading...</div></div>);
+		if ( _.isEmpty(this.state.model) ) {
+			return (<div className="profile"><div className="loading">Loading...</div></div>)
 		}
 
-		let user = this.state.model;
+		let user = this.state.model
 
 		return (<div className="profile">
 			<h4>Hi {user.name}</h4>
@@ -29,8 +30,8 @@ var Profile = React.createClass({
 			<p>
 				<button className="btn btn-primary" onClick={this.refreshTokens}>Create new tokens</button>
 			</p>
-		</div>);
+		</div>)
 	}
-});
+})
 
-export default Profile;
+export default Profile

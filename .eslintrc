@@ -1,0 +1,13 @@
+{
+	"extends": "standard",
+	"plugins": [
+		"react"
+	],
+	"ecmaFeatures": {
+		"jsx": true
+	},
+	rules:{
+		"indent": [2, "tab"],
+		"space-in-parens": [0]
+	}
+}
