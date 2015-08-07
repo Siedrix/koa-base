@@ -4,30 +4,30 @@ import { v4 } from 'node-uuid'
 import mongooseHidden from 'mongoose-hidden'
 import _ from 'underscore'
 
-let UserSchema =  new Schema({
+let UserSchema = new Schema({
 	name: String,
 	password: { type: String, hide: true },
 	apiKey: { type: String, hide: true },
-	apiToken: { type: String, hide: true },
+	apiToken: { type: String, hide: true }
 })
 
-UserSchema.plugin(mongooseHidden());
+UserSchema.plugin(mongooseHidden())
 
-UserSchema.pre('save', function(next) {
-	if(!this.apiKey){this.apiKey = v4();}
-	if(!this.apiToken){this.apiToken = v4();}
+UserSchema.pre('save', function (next) {
+	if (!this.apiKey) {this.apiKey = v4()}
+	if (!this.apiToken) {this.apiToken = v4()}
 
-	next();
-});
+	next()
+})
 
-UserSchema.methods.toPrivateObject = function(){
-	let doc = _.extend({},this._doc);
+UserSchema.methods.toPrivateObject = function () {
+	let doc = _.extend({}, this._doc)
 
-	delete doc.__v;
-	delete doc.password;
+	delete doc.__v
+	delete doc.password
 
-	return doc;
-};
+	return doc
+}
 
 let User = db.model('User', UserSchema)
 

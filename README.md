@@ -1,11 +1,10 @@
 # koa-base
-This is a koa base app
-
+This is a koa/mongoose base app in the backend and a react/backbone app in the frontend. Also has some socket.io sugar.
 
 #### Run server in dev mode
 
 ```
-supervisor -i public --debug - --harmony server.js | /usr/local/bin/bunyan
+supervisor -x babel-node -i public --debug - --harmony server.js | /usr/local/bin/bunyan
 ```
 
 #### Run server in production

@@ -48,33 +48,33 @@ var Timeline = React.createClass({
 	textareaChangeHandler: function () {
 		var value = this.refs.idea.getDOMNode().value
 
-		if(value){
+		if (value) {
 			this.setState({successButtonEnable: true})
-		}else{
+		} else {
 			this.setState({successButtonEnable: false})
 		}
 	},
-	addIdea:function () {
+	addIdea: function () {
 		var el = this.refs.idea.getDOMNode()
 		var value = el.value
 
-		var idea = new IdeaModel({content:value})
+		var idea = new IdeaModel({content: value})
 		el.value = ''
 		idea.save()
 	},
 	render: function () {
 		var successButton
-		if(this.state.successButtonEnable){
+		if (this.state.successButtonEnable) {
 			successButton = (<button ref="successButton" className="btn btn-primary" type="button" onClick={this.addIdea}>
 				Share
 			</button>)
-		}else{
+		} else {
 			successButton = (<button ref="successButton" className="btn btn-primary" type="button" disabled="disabled" onClick={this.addIdea}>
 				Share
 			</button>)
 		}
 
-		var items = this.getCollection().map(function(model){
+		var items = this.getCollection().map(function (model) {
 			return (<TimelineItem model={model} />)
 		})
 
