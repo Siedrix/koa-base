@@ -1,60 +1,60 @@
-import router from 'koa-router';
-import Idea from '../../models/idea';
+import router from 'koa-router'
+import Idea from '../../models/idea'
 
-let ideasRouter = router();
+let ideasRouter = router()
 
-ideasRouter.get('/', function* (){
+ideasRouter.get('/', function *() {
 	let ideas = yield Idea.find({})
 	.sort('-date')
 	.populate('user')
-	.exec();
+	.exec()
 
-	this.body = ideas.map(function(item){return item.toJSON()});
-});
+	this.body = ideas.map(function (item) {return item.toJSON()})
+})
 
-ideasRouter.post('/', function* (){
+ideasRouter.post('/', function *() {
 	let idea = yield Idea.create({
 		content: this.request.body.content,
 		user: this.state.user._id
-	});
+	})
 
-	this.body = idea.toJSON();
-});
+	this.body = idea.toJSON()
+})
 
-ideasRouter.get('/:id', function* (){
-	let idea = yield Idea.findOne({_id:this.params.id}).exec();
+ideasRouter.get('/:id', function *() {
+	let idea = yield Idea.findOne({_id: this.params.id}).exec()
 
-	if(!idea){return this.throw(404);}
+	if (!idea) {return this.throw(404)}
 
-	this.body = idea.toJSON();
-});
+	this.body = idea.toJSON()
+})
 
-ideasRouter.put('/:id', function* (){
-	let idea = yield Idea.findOne({_id:this.params.id})
+ideasRouter.put('/:id', function *() {
+	let idea = yield Idea.findOne({_id: this.params.id})
 	.populate('user')
-	.exec();
+	.exec()
 
-	if( !idea ){return this.throw(404);}
-	if( !idea.user._id.equals(this.state.user._id) ){return this.throw(403);}
+	if (!idea) {return this.throw(404)}
+	if (!idea.user._id.equals(this.state.user._id)) {return this.throw(403)}
 
-	idea.set('content', this.request.body.content);
+	idea.set('content', this.request.body.content)
 
-	yield idea.save();
+	yield idea.save()
 
-	this.body = idea.toJSON();
-});
+	this.body = idea.toJSON()
+})
 
-ideasRouter.del('/:id', function* (){
-	let idea = yield Idea.findOne({_id:this.params.id})
+ideasRouter.del('/:id', function *() {
+	let idea = yield Idea.findOne({_id: this.params.id})
 	.populate('user')
-	.exec();
+	.exec()
 
-	if( !idea ){return this.throw(404);}
-	if( !idea.user._id.equals(this.state.user._id) ){return this.throw(403);}
+	if (!idea) {return this.throw(404)}
+	if (!idea.user._id.equals(this.state.user._id)) {return this.throw(403)}
 
-	yield idea.remove();
+	yield idea.remove()
 
-	this.body = {sucess:true};
-});
+	this.body = {sucess: true}
+})
 
-export default ideasRouter;
+export default ideasRouter

@@ -103,7 +103,7 @@ gulp.task('lint-frontend', function () {
 })
 
 gulp.task('lint-backend', function () {
-	return gulp.src(['gulpfile.js', 'server.js', 'runner.js', 'router/*.js', 'router/api/*.js', 'models/*.js', 'lib/*.js'])
+	return gulp.src(['gulpfile.js', 'server.js', 'runner.js', 'routers/*.js', 'routers/api/*.js', 'models/*.js', 'lib/*.js'])
         .pipe(eslint())
         .pipe(eslint.format())
         .pipe(eslint.failOnError())
@@ -117,6 +117,15 @@ gulp.task('watch', function () {
 		'frontend/*.jsx',
 		'frontend/widgets/*.jsx',
 		'frontend/data/*.js'
-	], ['webpack'])
+	], ['lint-frontend', 'webpack'])
 	gulp.watch(['public/css/app.css'], ['reload'])
+	gulp.watch([
+		'gulpfile.js',
+		'server.js',
+		'runner.js',
+		'routers/*.js',
+		'routers/api/*.js',
+		'models/*.js',
+		'lib/*.js'
+	], ['lint-backend'])
 })

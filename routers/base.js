@@ -1,23 +1,28 @@
-import router from 'koa-router';
-import User from '../models/User';
+import router from 'koa-router'
+import User from '../models/User'
 
-var baseRouter = router();
+var baseRouter = router()
 
-var getUserMiddleware = function *(next){
-	let user = yield User.findById(this.session.userId).exec();
+var getUserMiddleware = function *(next) {
+	if (!this.session.userId) {
+		yield next
+		return
+	}
 
-	this.state.user = user;
-	yield next;
+	let user = yield User.findById(this.session.userId).exec()
+
+	this.state.user = user
+	yield next
 }
 
-baseRouter.use(getUserMiddleware);
+baseRouter.use(getUserMiddleware)
 
 baseRouter.get('/', function *() {
-	yield this.render('public/home');
-});
+	yield this.render('public/home')
+})
 
 baseRouter.get('/about', function *() {
-	yield this.render('public/about');
-});
+	yield this.render('public/about')
+})
 
-export default baseRouter;
+export default baseRouter

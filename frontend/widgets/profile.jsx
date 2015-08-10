@@ -1,5 +1,5 @@
+/* globals Backbone */
 import React from 'react'
-import Backbone from 'Backbone'
 import {} from 'backbone-react-component'
 import _ from 'underscore'
 

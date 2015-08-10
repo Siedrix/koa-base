@@ -4,7 +4,7 @@ This is a koa/mongoose base app in the backend and a react/backbone app in the f
 #### Run server in dev mode
 
 ```
-supervisor -x babel-node -i public --debug - --harmony server.js | /usr/local/bin/bunyan
+supervisor -i public,frontend --debug - --harmony runner.js | /usr/local/bin/bunyan
 ```
 
 #### Run server in production

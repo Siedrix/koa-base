@@ -1,4 +1,4 @@
-import Backbone from 'Backbone'
+/* globals Backbone */
 import React from 'react'
 import {} from 'backbone-react-component'
 import moment from 'moment'
