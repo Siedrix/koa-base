@@ -1,5 +1,5 @@
 import router from 'koa-router'
-import User from '../models/User'
+import User from '../models/user'
 import bcrypt from 'bcrypt'
 import Bluebird from 'bluebird'
 

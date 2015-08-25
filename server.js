@@ -7,14 +7,15 @@ import flash from 'koa-flash'
 import router from 'koa-router'
 import db from './lib/db'
 import logger from './lib/logger'
+import env from './env'
 
 var app = koa()
 
 app.keys = ['some secret hurr']
 app.use(session({
 	store: {
-		host: process.env.REDIS_ADDR || '127.0.0.1',
-		port: process.env.REDIS_PORT || 6379,
+		host: env.redis.host || '127.0.0.1',
+		port: env.redis.port || 6379,
 		ttl: 60 * 60 * 24 * 14
 	}
 }))
